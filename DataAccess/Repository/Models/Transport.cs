@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace PruebaIngresoBackend.Repository.Models;
+namespace DataAccess.Repository.Models;
 
 [Table("transport")]
 public partial class Transport

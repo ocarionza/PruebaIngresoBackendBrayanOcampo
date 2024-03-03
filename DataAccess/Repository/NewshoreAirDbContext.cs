@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using PruebaIngresoBackend.Repository.Models;
+using DataAccess.Repository.Models;
 
-namespace PruebaIngresoBackend.Repository;
+namespace DataAccess.Repository;
 
 public partial class NewshoreAirDbContext : DbContext
 {

@@ -1,6 +1,6 @@
 ﻿using DataAccess.Repository.Interfaces;
-using PruebaIngresoBackend.Repository;
-using PruebaIngresoBackend.Repository.Models;
+using DataAccess.Repository;
+using DataAccess.Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

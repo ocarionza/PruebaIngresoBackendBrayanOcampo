@@ -1,5 +1,5 @@
-﻿using PruebaIngresoBackend.Repository.Models;
-using PruebaIngresoBackend.Repository;
+﻿using DataAccess.Repository.Models;
+using DataAccess.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

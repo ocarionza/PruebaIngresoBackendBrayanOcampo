@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PruebaIngresoBackend.Repository;
+using DataAccess.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
