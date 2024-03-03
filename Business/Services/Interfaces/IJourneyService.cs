@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Business.Services.Interfaces
 {
     public interface IJourneyService
     {
-
+        public Task<ResponseDto> getJourney(ParamsDto request);
     }
 }
