@@ -1,5 +1,15 @@
 # PruebaIngresoBackend Jose Brayan Ocampo Castaño
 
+## Arquityectura del proyecto
+
+- Se utiliza un arquitectura Multicapa (3 layer architecture)
+
+> Bussines Logic Layer
+
+> Data Access Layer
+
+> Web API Layer
+
 ## Tecnolgias utilizadas
 
 
@@ -22,7 +32,7 @@
 > https://recruiting-api.newshore.es/api/flights/2
 
 
-- A continuacion se muestra donde se pueden encontrar las lineas de codigo mencionadas:
+- A continuacion se muestra donde se pueden encontrar las lineas de codigo mencionadas, por motivo de pruebas se utiliza una variable de tipo string con un json sencillo:
 
 > PruebaIngresoBackend\Business\Services\Journey\JourneyService.cs
 
