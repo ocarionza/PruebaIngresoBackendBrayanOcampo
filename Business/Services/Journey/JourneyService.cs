@@ -130,7 +130,7 @@ namespace Business.Services
                 ResponseDto response = new ResponseDto([], $"An error ocurred | Error: {e.Message}", "Failture");
                 return response;
             }
-     
+
         }
 
         public static List<JourneyDto> CalculateRoutes(List<FlightDto> flights, string origin, string destination, List<string> visited = null)
@@ -152,7 +152,8 @@ namespace Business.Services
                         {
                             List<FlightDto> fly = new List<FlightDto>() { flight };
                             JourneyDto journey = new JourneyDto(fly, origin, destination, flight.Price);
-                            journeys.Add(journey);
+                            if (!JourneyExistsWithDifferentPrice(journeys, journey))
+                                journeys.Add(journey);
                         }
                         else
                         {
@@ -163,7 +164,8 @@ namespace Business.Services
                                 List<FlightDto> fly = new List<FlightDto>() { flight };
                                 JourneyDto journey = new JourneyDto(fly, flight.Origin, destination, flight.Price + nextRoute.Sum(x => x.Price));
                                 journey.Flights.AddRange(nextRoute.SelectMany(x => x.Flights));
-                                journeys.Add(journey);
+                                if (!JourneyExistsWithDifferentPrice(journeys, journey))
+                                    journeys.Add(journey);
                             }
                         }
                         visited.Remove(flight.Origin);
@@ -176,6 +178,17 @@ namespace Business.Services
             {
                 throw;
             }
+        }
+
+        private static bool JourneyExistsWithDifferentPrice(List<JourneyDto> journeys, JourneyDto newJourney)
+        {
+            foreach (var journey in journeys)
+            {
+                if (journey.Origin == newJourney.Origin && journey.Destination == newJourney.Destination &&
+                    journey.Price != newJourney.Price)
+                    return true;
+            }
+            return false;
         }
 
         public string test(string origin, string destination)
@@ -193,6 +206,7 @@ namespace Business.Services
 
                 //if (response.IsSuccessStatusCode)
                 //{
+                //var data = await response.Content.ReadAsStringAsync();
                 string data = "[{\"DepartureStation\":\"MZL\",\"ArrivalStation\":\"CAL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8020\",\"Price\":1000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"CAL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8040\",\"Price\":2000},{\"DepartureStation\":\"MZL\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8041\",\"Price\":2000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"CAL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8042\",\"Price\":3000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"CTG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8043\",\"Price\":1000},{\"DepartureStation\":\"MED\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8044\",\"Price\":2000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"MAD\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8045\",\"Price\":5000},{\"DepartureStation\":\"MAD\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8046\",\"Price\":5000},{\"DepartureStation\":\"MED\",\"ArrivalStation\":\"PER\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8046\",\"Price\":1000},{\"DepartureStation\":\"MZL\",\"ArrivalStation\":\"PER\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8047\",\"Price\":1000},{\"DepartureStation\":\"CAL\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8048\",\"Price\":2000},{\"DepartureStation\":\"PER\",\"ArrivalStation\":\"MZL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8049\",\"Price\":2000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"MZL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8049\",\"Price\":2000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"MIA\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8050\",\"Price\":6000},{\"DepartureStation\":\"MIA\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8051\",\"Price\":6000}]";
                     List<ResponseFligthDto> Fligths = JsonConvert.DeserializeObject<List<ResponseFligthDto>>(data);
                     if (Fligths.Count > 0)
