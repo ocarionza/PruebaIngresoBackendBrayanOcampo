@@ -75,8 +75,6 @@ namespace Business.Services
                 else
                 {
                     List<ResponseFligthDto> ResponseFligths = await ApiData();
-                    //List<ResponseFligthDto> search = ResponseFligths.Where(f => f.DepartureStation == request.Origin && f.ArrivalStation == request.Destination).ToList();
-
                     List<FlightDto> flights = new List<FlightDto>();
                     foreach (var route in ResponseFligths)
                     {
