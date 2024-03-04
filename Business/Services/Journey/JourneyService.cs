@@ -135,34 +135,40 @@ namespace Business.Services
      
         }
 
-        public static List<JourneyDto> CalculateRoutes(List<FlightDto> flights, string origin, string destination)
+        public static List<JourneyDto> CalculateRoutes(List<FlightDto> flights, string origin, string destination, List<string> visited = null)
         {
             try
             {
+                if (visited == null)
+                    visited = new List<string>();
+
                 List<JourneyDto> journeys = new List<JourneyDto>();
 
                 foreach (FlightDto flight in flights)
                 {
-                    if (flight.Origin == origin)
+                    if (flight.Origin == origin && !visited.Contains(flight.Origin))
                     {
+                        visited.Add(flight.Origin);
+
                         if (flight.Destination == destination)
                         {
-                            List<FlightDto> fly = [flight];
+                            List<FlightDto> fly = new List<FlightDto>() { flight };
                             JourneyDto journey = new JourneyDto(fly, origin, destination, flight.Price);
                             journeys.Add(journey);
                         }
                         else
                         {
-                            List<JourneyDto> nextRoute = CalculateRoutes(flights, flight.Destination, destination);
+                            List<JourneyDto> nextRoute = CalculateRoutes(flights, flight.Destination, destination, visited);
 
                             if (nextRoute != null && nextRoute.Count > 0)
                             {
-                                List<FlightDto> fly = [flight];
+                                List<FlightDto> fly = new List<FlightDto>() { flight };
                                 JourneyDto journey = new JourneyDto(fly, flight.Origin, destination, flight.Price + nextRoute.Sum(x => x.Price));
                                 journey.Flights.AddRange(nextRoute.SelectMany(x => x.Flights));
                                 journeys.Add(journey);
                             }
                         }
+                        visited.Remove(flight.Origin);
                     }
                 }
 
@@ -170,11 +176,10 @@ namespace Business.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-  
+
         public string test(string origin, string destination)
         {
             return "Ruta de vuelo de " + origin + " a " + destination;
@@ -190,7 +195,7 @@ namespace Business.Services
 
                 //if (response.IsSuccessStatusCode)
                 //{
-                string data = "[{\"DepartureStation\":\"MZL\",\"ArrivalStation\":\"JFK\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8020\",\"Price\":1000},{\"DepartureStation\":\"JFK\",\"ArrivalStation\":\"BCN\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8040\",\"Price\":1000}]";
+                string data = "[{\"DepartureStation\":\"MZL\",\"ArrivalStation\":\"CAL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8020\",\"Price\":1000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"CAL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8040\",\"Price\":2000},{\"DepartureStation\":\"MZL\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8041\",\"Price\":2000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"CAL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8042\",\"Price\":3000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"CTG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8043\",\"Price\":1000},{\"DepartureStation\":\"MED\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8044\",\"Price\":2000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"MAD\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8045\",\"Price\":5000},{\"DepartureStation\":\"MAD\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8046\",\"Price\":5000},{\"DepartureStation\":\"MED\",\"ArrivalStation\":\"PER\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8046\",\"Price\":1000},{\"DepartureStation\":\"MZL\",\"ArrivalStation\":\"PER\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8047\",\"Price\":1000},{\"DepartureStation\":\"CAL\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8048\",\"Price\":2000},{\"DepartureStation\":\"PER\",\"ArrivalStation\":\"MZL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8049\",\"Price\":2000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"MZL\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8049\",\"Price\":2000},{\"DepartureStation\":\"BOG\",\"ArrivalStation\":\"MIA\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8050\",\"Price\":6000},{\"DepartureStation\":\"MIA\",\"ArrivalStation\":\"BOG\",\"FlightCarrier\":\"AV\",\"FlightNumber\":\"8051\",\"Price\":6000}]";
                     List<ResponseFligthDto> Fligths = JsonConvert.DeserializeObject<List<ResponseFligthDto>>(data);
                     if (Fligths.Count > 0)
                     {
