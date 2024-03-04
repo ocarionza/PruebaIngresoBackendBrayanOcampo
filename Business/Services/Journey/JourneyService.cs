@@ -216,7 +216,7 @@ namespace Business.Services
                 //}
                 //else
                 //{
-                    //Console.WriteLine($"No se pudo realizar la petición: bad");
+                    //Console.WriteLine($"Bad request | code: {response.StatusCode}");
                 //}
                 return ResponseFligths;
             }
