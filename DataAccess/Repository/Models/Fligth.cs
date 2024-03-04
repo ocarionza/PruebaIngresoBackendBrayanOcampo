@@ -10,6 +10,7 @@ namespace DataAccess.Repository.Models;
 public partial class Fligth
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("fligth_id")]
     public int FligthId { get; set; }
 
@@ -27,7 +28,7 @@ public partial class Fligth
     public string? Destination { get; set; }
 
     [Column("price")]
-    public double? Price { get; set; }
+    public double Price { get; set; }
 
     [InverseProperty("Fligth")]
     public virtual ICollection<JourneyFlight> JourneyFlights { get; set; } = new List<JourneyFlight>();

@@ -10,5 +10,7 @@ namespace Business.Services.Interfaces
     public interface IJourneyService
     {
         public Task<ResponseDto> getJourney(ParamsDto request);
+
+        public string test(string origin, string destination);
     }
 }

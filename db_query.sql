@@ -1,12 +1,12 @@
 CREATE TABLE transport (
-    transport_id int NOT NULL,
+    transport_id int NOT NULL identity,
     fligth_carrier varchar(255),
     fligth_carrier_number varchar(255),
     PRIMARY KEY (transport_id),
 );
 
 CREATE TABLE fligth (
-    fligth_id int NOT NULL,
+    fligth_id int NOT NULL identity,
     transport_id int NOT NULL,
     origin varchar(255),
 	destination varchar (255),
@@ -16,7 +16,7 @@ CREATE TABLE fligth (
 );
 
 CREATE TABLE journey (
-    journey_id int NOT NULL,
+    journey_id int NOT NULL identity,
     origin varchar(255),
     destination varchar(255),
 	price float,
@@ -24,7 +24,7 @@ CREATE TABLE journey (
 );
 
 CREATE TABLE journey_flight (
-    journey_flight_id int NOT NULL,
+    journey_flight_id int NOT NULL identity,
     fligth_id int NOT NULL,
     journey_id int NOT NULL,
     PRIMARY KEY (journey_flight_id),

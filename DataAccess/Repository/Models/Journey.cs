@@ -10,6 +10,7 @@ namespace DataAccess.Repository.Models;
 public partial class Journey
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("journey_id")]
     public int JourneyId { get; set; }
 
@@ -24,7 +25,7 @@ public partial class Journey
     public string? Destination { get; set; }
 
     [Column("price")]
-    public double? Price { get; set; }
+    public double Price { get; set; }
 
     [InverseProperty("Journey")]
     public virtual ICollection<JourneyFlight> JourneyFlights { get; set; } = new List<JourneyFlight>();

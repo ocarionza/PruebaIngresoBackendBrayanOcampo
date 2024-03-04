@@ -10,6 +10,7 @@ namespace DataAccess.Repository.Models;
 public partial class JourneyFlight
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("journey_flight_id")]
     public int JourneyFlightId { get; set; }
 

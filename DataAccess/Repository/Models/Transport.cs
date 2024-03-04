@@ -10,6 +10,7 @@ namespace DataAccess.Repository.Models;
 public partial class Transport
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("transport_id")]
     public int TransportId { get; set; }
 

@@ -16,7 +16,7 @@ namespace Business.Dto
         public string Destination { get; set; }
 
         [JsonPropertyName("number_of_flights")]
-        public int? NumberOfFlights { get; set; }
+        public int NumberOfFlights { get; set; }
 
         public ParamsDto(String origin, String destination, int number_of_flights)
         {
